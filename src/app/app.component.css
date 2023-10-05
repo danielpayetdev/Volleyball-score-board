@@ -19,3 +19,26 @@
 .teamName {
     font-size: 5rem;
 }
+
+#setWin {
+    width: 100%;
+    display: flex;
+    text-align: center;
+
+
+    button,
+    span {
+        margin: auto;
+    }
+}
+
+#score {
+    display: flex;
+    flex-direction: column;
+
+    #scoreA,
+    #scoreB {
+        display: flex;
+        flex-direction: row;
+    }
+}

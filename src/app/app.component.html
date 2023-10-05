@@ -2,26 +2,46 @@
   <div class="teamView">
     <span class="teamName">{{ scoreService.teamA().name }}</span>
     <app-point-score [score]="scoreService.teamACurrentSet()" />
-    Nb set: {{ scoreService.teamASets() }}
-    <button (click)="update(scoreService.teamA)"
-            [disabled]="scoreService.isSetWin()">+</button>
+      {{ scoreService.teamASets() }}
+      @if(!scoreService.isSetWin()) {
+        <button (click)="update(scoreService.teamA)">+</button>
+      }
   </div>
   <div class="teamView">
-    <span class="teamName">{{ scoreService.teamA().name }}</span>
+    <span class="teamName">{{ scoreService.teamB().name }}</span>
     <app-point-score [score]="scoreService.teamBCurrentSet()" />
-    Nb set: {{ scoreService.teamBSets() }}
-    <button (click)="update(scoreService.teamB)"
-            [disabled]="scoreService.isSetWin()">+</button>
+      {{ scoreService.teamBSets() }}
+      @if(!scoreService.isSetWin()) {
+        <button (click)="update(scoreService.teamB)">+</button>
+      }
   </div>
 </div>
 
-<div *ngIf="scoreService.isSetWin() && !scoreService.isMatchWin()">
-  <button (click)="scoreService.nextSet()">Passez au set suivant</button>
+<div id="score">
+  <div id="scoreA">
+    {{ scoreService.teamA().name }} @if(scoreService.currentSet() === 0){ 0 }
+    @for(teamASet of scoreService.teamA().sets; track teamASet; let i = $index ){
+      @if(i < scoreService.currentSet() || (scoreService.isMatchWin() && i === scoreService.currentSet())){
+        {{ teamASet }}
+      }
+    }
+  </div>
+  <div id="scoreB">
+    {{ scoreService.teamB().name }} @if(scoreService.currentSet() === 0){ 0 }
+    @for(teamBSet of scoreService.teamB().sets; track teamBSet; let i = $index ){
+      @if(i < scoreService.currentSet() || (scoreService.isMatchWin() && i === scoreService.currentSet())){
+        {{ teamBSet }}
+      }
+    }
+  </div>
 </div>
 
-<div *ngIf="scoreService.isMatchWin()">
-  <span>Victoire de l'équipe </span>
-  <span *ngIf="scoreService.teamASets() === 3">A</span>
-  <span *ngIf="scoreService.teamBSets() === 3">B</span>
-  <span>!</span>
+@if(scoreService.isSetWin()){
+<div id="setWin">
+  @if(!scoreService.isMatchWin()) {
+  <button (click)="scoreService.nextSet()">Passer au set suivant</button>
+  } @else {
+  <span>Victoire de l'équipe {{ scoreService.teamASets() === 3 ? 'A' : 'B' }}!</span>
+  }
 </div>
+}

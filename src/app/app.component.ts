@@ -1,5 +1,4 @@
 import { Component, WritableSignal, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { PointScoreComponent } from "./point-score/point-score.component";
 import { MatchService, Team } from './services/score.service';
@@ -9,9 +8,10 @@ import { MatchService, Team } from './services/score.service';
   standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [CommonModule, RouterOutlet, PointScoreComponent]
+  imports: [RouterOutlet, PointScoreComponent]
 })
 export class AppComponent {
+  toto =['t']
   scoreService = inject(MatchService);
 
   update(controller: WritableSignal<Team>): void {
