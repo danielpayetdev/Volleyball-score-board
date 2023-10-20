@@ -1,0 +1,17 @@
+<div class="text-center flex flex-col space-y-6 items-center">
+  <span class="text-4xl">{{ team }}</span>
+  <div class="rounded-xl bg-cyan-700 p-8 w-48 h-48">
+    <span class="text-9xl text-white">
+      {{ score }}
+    </span>
+  </div>
+  {{ sets }}
+  @if(stale) {
+  <button
+    (click)="pointScored.emit()"
+    class="rounded-full bg-cyan-600 text-white h-16 w-16 text-5xl text-center"
+  >
+    <span class="align-text-top">+</span>
+  </button>
+  }
+</div>

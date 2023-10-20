@@ -1,47 +1,45 @@
-<div class="scoreLigne">
-  <div class="teamView">
-    <span class="teamName">{{ scoreService.teamA().name }}</span>
-    <app-point-score [score]="scoreService.teamACurrentSet()" />
-      {{ scoreService.teamASets() }}
-      @if(!scoreService.isSetWin()) {
-        <button (click)="update(scoreService.teamA)">+</button>
-      }
-  </div>
-  <div class="teamView">
-    <span class="teamName">{{ scoreService.teamB().name }}</span>
-    <app-point-score [score]="scoreService.teamBCurrentSet()" />
-      {{ scoreService.teamBSets() }}
-      @if(!scoreService.isSetWin()) {
-        <button (click)="update(scoreService.teamB)">+</button>
-      }
-  </div>
+<div class="flex flexw row justify-center space-x-60 m-16">
+  <app-team-score
+    [team]="teamA"
+    [sets]="teamASets()"
+    [score]="currentSetPoint()[TEAM_A]"
+    (pointScored)="update(TEAM_A)"
+    [stale]="!isSetWin()"
+  />
+  <app-team-score
+    [team]="teamB"
+    [sets]="teamBSets()"
+    [score]="currentSetPoint()[TEAM_B]"
+    (pointScored)="update(TEAM_B)"
+    [stale]="!isSetWin()"
+  />
 </div>
 
-<div id="score">
+<!-- <div id="score">
   <div id="scoreA">
-    {{ scoreService.teamA().name }} @if(scoreService.currentSet() === 0){ 0 }
-    @for(teamASet of scoreService.teamA().sets; track teamASet; let i = $index ){
+    {{ teamA }} @if(currentSet() === 0){ 0 }
+    @for(teamASet of match; track teamASet; let i = $index ){
       @if(i < scoreService.currentSet() || (scoreService.isMatchWin() && i === scoreService.currentSet())){
         {{ teamASet }}
       }
     }
   </div>
   <div id="scoreB">
-    {{ scoreService.teamB().name }} @if(scoreService.currentSet() === 0){ 0 }
+    {{ teamB }} @if(scoreService.currentSet() === 0){ 0 }
     @for(teamBSet of scoreService.teamB().sets; track teamBSet; let i = $index ){
       @if(i < scoreService.currentSet() || (scoreService.isMatchWin() && i === scoreService.currentSet())){
         {{ teamBSet }}
       }
     }
   </div>
-</div>
+</div> -->
 
-@if(scoreService.isSetWin()){
-<div id="setWin">
-  @if(!scoreService.isMatchWin()) {
-  <button (click)="scoreService.nextSet()">Passer au set suivant</button>
+@if(isSetWin()){
+<div class="flex w-full justify-center">
+  @if(!isMatchWin()) {
+  <button (click)="nextSet()" class="m-auto border p-4 rounded bg-green-800 text-white">Passer au set suivant</button>
   } @else {
-  <span>Victoire de l'équipe {{ scoreService.teamASets() === 3 ? 'A' : 'B' }}!</span>
+  <span class="p-4 rounded bg-green-800 text-white">Victoire de l'équipe {{ teamASets() + 1 === 3 ? "A" : "B" }}!</span>
   }
 </div>
 }
